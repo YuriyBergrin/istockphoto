@@ -30,7 +30,6 @@ public class IstockphotoTest {
     public void launchbrowser(String browser) throws MalformedURLException {
         String URL = "https://www.istockphoto.com/sign-in";
         if (browser.equalsIgnoreCase("firefox")) {
-            System.out.println(" Executing on FireFox");
             String Node = "http://192.168.0.18:5556/wd/hub";
             DesiredCapabilities cap = DesiredCapabilities.firefox();
             cap.setBrowserName("firefox");
@@ -39,21 +38,21 @@ public class IstockphotoTest {
             driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
             driver.navigate().to(URL);
             driver.manage().window().maximize();
+
         } else if (browser.equalsIgnoreCase("chrome")) {
-            System.out.println(" Executing on CHROME");
             DesiredCapabilities cap = DesiredCapabilities.chrome();
             cap.setBrowserName("chrome");
+
             String Node = "http://192.168.0.18:5557/wd/hub";
             driver = new RemoteWebDriver(new URL(Node), cap);
             driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-
             driver.navigate().to(URL);
             driver.manage().window().maximize();
+
         } else {
             throw new IllegalArgumentException("The Browser Type is Undefined");
         }
     }
-
 
     @BeforeMethod
     public void setUp() {
@@ -103,13 +102,13 @@ public class IstockphotoTest {
     private void checkPhoto() {
         page.showAllBoards();
         page.gotoFirstBoard();
-        $x("//*[contains(@class,\"board-item-image ng-scope\")]").shouldBe(Condition.visible);
+        page.getPhoto().shouldBe(Condition.visible);
     }
 
     @Step("Удалить фото из Board и проверить удаление.")
     private void removePhoto() {
         page.remove();
-        $x("//*[contains(@class,\"board-item-image ng-scope\")]").shouldNotBe(Condition.visible);
+        page.getPhoto().shouldNotBe(Condition.visible);
     }
 
     @Step("Удалить Board и проверить удаление.")

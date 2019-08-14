@@ -1,4 +1,5 @@
 
+import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -11,6 +12,11 @@ public class IstockphotoPage {
         WebDriverRunner.setWebDriver(driver);
     }
 
+    private SelenideElement photo =  $x("//*[contains(@class,\"board-item-image ng-scope\")]");
+
+    public SelenideElement getPhoto() {
+        return photo;
+    }
 
     public void login(String login, String password) {
         $(By.id("new_session_username")).val(login);
